@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: flex;
+            gap: 10px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 5px;
+            color: #000;
+        }
+        .buttons button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <video id="videoPlayer" autoplay muted controls>
+        <source id="videoSource" src="" type="video/mp4">
+    </video>
+
+    <div class="buttons">
+        <button onclick="changeVideo('videos/anime.mp4')">Video 1</button>
+        <button onclick="changeVideo('videos/perro.mp4')">Video 2</button>
+        <button onclick="changeVideo('videos/ciudad.mp4')">Video 3</button>
+    </div>
+
+    <script>
+        // Al cargar la página, recupera el video guardado en el Local Storage
+        window.addEventListener('load', function() {
+            const savedVideo = localStorage.getItem('currentVideo');
+            const videoSource = document.getElementById('videoSource');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            // Si hay un video guardado, úsalo, de lo contrario, usa el video por defecto
+            if (savedVideo) {
+                videoSource.src = savedVideo;
+            } else {
+                videoSource.src = 'videos/anime.mp4'; // Video por defecto
+            }
+
+            videoPlayer.load();
+            videoPlayer.play();
+        });
+
+        function changeVideo(videoSrc) {
+            var videoPlayer = document.getElementById('videoPlayer');
+            var videoSource = document.getElementById('videoSource');
+            videoSource.src = videoSrc;
+            videoPlayer.load();
+            videoPlayer.play();
+
+            // Guardar la ruta del video actual en Local Storage
+            localStorage.setItem('currentVideo', videoSrc);
+        }
+    </script>
+
+</body>
+</html>
+
+
